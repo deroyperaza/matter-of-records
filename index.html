@@ -362,7 +362,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
     <div class="hm-hero">
       <p class="hm-kick" id="hm-kick"></p>
       <h2 class="hm-h">Every album. Every career. One&nbsp;scale.</h2>
-      <p class="hm-dek">Look up an artist to see how critics, fans, charts and sales moved, record by record. Not in the crate yet? Ask for them, and they arrive after the nightly&nbsp;update.</p>
+      <p class="hm-dek">Look up an artist to see how critics, fans, charts and sales moved, record by record. Not in the crate yet? Ask for them, and they usually arrive within&nbsp;minutes.</p>
       <div class="hm-search">
         <input id="hm-q" type="search" autocomplete="off" spellcheck="false" placeholder="Search for an artist"
           role="combobox" aria-expanded="false" aria-controls="hm-list" aria-autocomplete="list" aria-label="Search for an artist">
@@ -1224,7 +1224,7 @@ function goArtist(id){
   q.addEventListener('blur',()=>setTimeout(()=>open(false),120));
   q.addEventListener('focus',()=>{if(list.children.length)open(true);});
   async function request(r){
-    if(asked[r.mbid]){st.innerHTML=`<b>${esc(r.name)}</b> is already requested. Look for them after the nightly update.`; return;}
+    if(asked[r.mbid]){st.innerHTML=`<b>${esc(r.name)}</b> is already requested. Look for them here soon.`; return;}
     st.textContent='Sending your request…';
     const doc={name:{stringValue:r.name.slice(0,120)},status:{stringValue:'new'}};
     if(r.disambiguation)doc.disambiguation={stringValue:r.disambiguation.slice(0,200)};
@@ -1234,7 +1234,7 @@ function goArtist(id){
       const res=await fetch(FS+':commit?key='+FSKEY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
       if(res.ok||res.status===409){
         asked[r.mbid]=1; try{localStorage.setItem('mor-asked',JSON.stringify(asked))}catch(_){}
-        st.innerHTML=res.ok?`Got it. <b>${esc(r.name)}</b> joins the crate after the nightly update.`:`<b>${esc(r.name)}</b> is already on the list. Look for them after the nightly update.`;
+        st.innerHTML=res.ok?`Got it. <b>${esc(r.name)}</b> joins the crate in about 15 minutes. Check back soon.`:`<b>${esc(r.name)}</b> is already on the list. Look for them here soon.`;
         const li=list.querySelector(`[data-mbid="${r.mbid}"]`); if(li){li.classList.add('done'); li.querySelector('.hm-act').textContent='Requested';}
       } else st.textContent='That request didn’t go through. Try again in a minute.';
     }catch(_){ st.textContent='Requests work on the public site: deroyperaza.github.io/matter-of-records'; }
