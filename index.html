@@ -1190,24 +1190,35 @@ function goArtist(id){
     if(v.length<2){paint(local); if(!v)open(false); return;}
     paint(local,null,local.length?'':'Looking it up…');
     const seq=++mbSeq;
-    mbT=setTimeout(async()=>{
+    mbT=setTimeout(()=>mbSearch(v,local,seq),550);
+  });
+  async function mbSearch(v,local,seq){
       try{
-        const r=await fetch('https://musicbrainz.org/ws/2/artist?limit=8&fmt=json&query='+encodeURIComponent(v));
-        const j=await r.json(); if(seq!==mbSeq)return;
+        let j=null;  // MusicBrainz answers bursts with 503 "server is busy": back off and retry, never read that as "no artist"
+        for(const wait of [0,1300,3000]){
+          if(wait){await new Promise(r=>setTimeout(r,wait)); if(seq!==mbSeq)return;}
+          try{const r=await fetch('https://musicbrainz.org/ws/2/artist?limit=8&fmt=json&query='+encodeURIComponent(v));
+            const k=await r.json(); if(r.ok&&k&&Array.isArray(k.artists)){j=k;break;}}
+          catch(e){ if(e instanceof TypeError&&wait===3000)throw e; }
+        }
+        if(seq!==mbSeq)return;
+        if(!j){paint(local,null,'MusicBrainz is busy right now. Press Enter to search again.'); retryQ=v; return;}
         const rem=(j.artists||[]).filter(x=>x.score>=70&&!have.has(x.id)&&!have.has(nk(x.name)))
           .filter((x,i,arr)=>arr.findIndex(y=>nk(y.name)===nk(x.name))===i).slice(0,4)
           .map(x=>({mbid:x.id,name:x.name,disambiguation:x.disambiguation||'',type:x.type||'',country:x.country||''}));
         paint(local,rem,(!local.length&&!rem.length)?'No artist by that name. Try another spelling.':'');
       }catch(_){ if(seq!==mbSeq)return;
         paint(local,null,'Requests work on the public site: deroyperaza.github.io/matter-of-records');}
-    },380);
-  });
+  }
+  let retryQ='';
   q.addEventListener('keydown',e=>{
     if(e.key==='ArrowDown'||e.key==='ArrowUp'){ if(!items.length)return; e.preventDefault();
       cur=(cur+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;
       list.querySelectorAll('[role=option]').forEach((li,i)=>li.setAttribute('aria-selected',i===cur));
       const li=$('hm-o'+cur); if(li){li.scrollIntoView({block:'nearest'}); q.setAttribute('aria-activedescendant',li.id);} }
-    else if(e.key==='Enter'){ e.preventDefault(); pick(cur>=0?cur:0); }
+    else if(e.key==='Enter'){ e.preventDefault();
+      if(!items.length&&retryQ&&retryQ===q.value.trim()){const seq=++mbSeq; paint(localMatches(retryQ),null,'Looking it up…'); mbSearch(retryQ,localMatches(retryQ),seq); return;}
+      pick(cur>=0?cur:0); }
     else if(e.key==='Escape'){ open(false); }
   });
   q.addEventListener('blur',()=>setTimeout(()=>open(false),120));
