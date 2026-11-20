@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Serif:ital@0;1&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
 <style>
 /* Layout: a gig poster at night. Deep violet stage, warm-white type, hot inks for the data,
    and each artist's own sleeve colour flooding the hero like a screen-printed band.
@@ -30,6 +30,7 @@
   --tip-bg:#fff4e8; --tip-ink:#1a1033; --tip-ink-2:#5b4f78;
   --display:"Archivo","Helvetica Neue",Arial,sans-serif;
   --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --head:"Instrument Serif",Georgia,"Times New Roman",serif; /* headlines: Regular + italic only, never bold, sentence case */
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -46,7 +47,7 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;paddin
 .mast{display:flex;justify-content:space-between;align-items:baseline;gap:8px 24px;flex-wrap:wrap;padding-bottom:14px;
   border-bottom:8px solid transparent;border-image:linear-gradient(90deg,var(--s1) 0 33.3%,var(--s2) 33.3% 66.6%,var(--s3) 66.6%) 1}
 .mast h1{color:var(--ink)}
-.mast h1{font-size:22px;font-weight:900;font-stretch:125%;letter-spacing:-.01em}
+.mast h1{font-family:var(--head);font-size:30px;font-weight:400;line-height:1;letter-spacing:-.01em}
 .mast h1 span{font-weight:400}
 .mast .sub{font-family:var(--serif);font-style:italic;color:var(--ink-2);font-size:15px}
 
@@ -77,7 +78,7 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;paddin
 .pk-add:disabled{opacity:.45;cursor:not-allowed}
 .pk-sw{width:26px;height:26px;flex:none;background:var(--c);display:grid;place-items:center;color:var(--band-ink)}
 .pk-sw .spark-mini{display:block}
-.pk-name{font-weight:900;font-stretch:75%;font-size:24px;line-height:1;text-transform:uppercase;letter-spacing:-.005em}
+.pk-name{font-family:var(--head);font-weight:400;font-size:28px;line-height:1;letter-spacing:-.005em}
 .pk-btn .key-line{margin-left:2px}
 .chip{display:inline-flex;align-items:center;gap:10px;background:var(--board-2);border:2px solid var(--board-3);padding:6px 6px 6px 10px;min-height:48px}
 .chip .x{width:30px;height:30px;display:grid;place-items:center;color:var(--ink-3);font-size:20px;line-height:1}
@@ -108,7 +109,7 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;paddin
   --ink:#1a1033;--ink-2:#2b1d4a;--ink-3:#3d2e5e;--rule:rgba(26,16,51,.28);--board-2:rgba(26,16,51,.08)}
 .hero.band .take{color:var(--ink-2)}
 .hero{display:flex;flex-direction:column;gap:14px}
-.hero h2{font-size:clamp(34px,6.2vw,88px);font-weight:900;font-stretch:125%;line-height:.86;letter-spacing:-.035em;text-transform:uppercase;overflow-wrap:anywhere}
+.hero h2{font-family:var(--head);font-size:clamp(42px,7.4vw,108px);font-weight:400;line-height:.92;letter-spacing:-.02em;overflow-wrap:anywhere}
 .hero .meta{display:flex;flex-wrap:wrap;gap:6px 28px;align-items:baseline;font-stretch:90%}
 .hero .meta .shape{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink)}
 .hero .meta .spark{display:block;align-self:center;max-width:100%;height:auto}
@@ -160,7 +161,7 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;paddin
 /* tooltip: an inverted sticker */
 .tip{position:absolute;pointer-events:none;background:var(--tip-bg);color:var(--tip-ink);padding:12px 14px 13px;width:262px;z-index:5;display:flex;flex-direction:column;gap:7px}
 .tip .k{font-size:12px;color:var(--tip-ink-2);font-stretch:90%;font-variant-numeric:tabular-nums}
-.tip h4{margin:0;font-weight:900;font-stretch:110%;font-size:19px;line-height:1.05;letter-spacing:-.01em;text-wrap:balance}
+.tip h4{margin:0;font-family:var(--head);font-weight:400;font-size:23px;line-height:1.05;letter-spacing:-.005em;text-wrap:balance}
 .tip .row{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-stretch:90%}
 .tip .row > span:first-child{color:var(--tip-ink-2);display:inline-flex;align-items:center;gap:7px}
 .tip .row b{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
@@ -186,7 +187,7 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;paddin
 .cover-blank{background:repeating-radial-gradient(circle,var(--ink-3) 0 1px,transparent 1px 5px);opacity:.3;border-radius:50%}
 .sleeve-card figcaption{display:flex;flex-direction:column;gap:3px;min-width:0}
 .sleeve-card .lbl{font-size:13px;color:var(--ink-3);font-stretch:90%}
-.sleeve-card b{font-size:21px;font-weight:900;font-stretch:105%;line-height:1.05;letter-spacing:-.01em;text-wrap:balance}
+.sleeve-card b{font-family:var(--head);font-size:25px;font-weight:400;line-height:1.05;letter-spacing:-.005em;text-wrap:balance}
 .sleeve-card .val{font-family:var(--serif);font-size:16px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .ones{font-size:15px;color:var(--ink-2);border-top:1px solid var(--rule);padding-top:10px;font-variant-numeric:tabular-nums}
 .ones b{color:var(--ink);font-weight:800}
@@ -194,7 +195,7 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;paddin
 /* head to head */
 .hero h2.vs-title{font-size:clamp(30px,4.8vw,68px)}
 .vs-title span{box-decoration-break:clone;-webkit-box-decoration-break:clone;box-shadow:inset 0 -.1em 0 var(--c)}
-.vs-title i{font-family:var(--serif);font-weight:400;font-style:italic;text-transform:lowercase;font-size:.42em;letter-spacing:0;vertical-align:.35em;color:var(--ink-2)}
+.vs-title i{font-family:var(--head);font-weight:400;font-style:italic;text-transform:lowercase;font-size:.5em;letter-spacing:0;vertical-align:.35em;color:var(--ink-2)}
 .tape{display:flex;flex-direction:column;border-top:3px solid var(--ink);max-width:880px}
 .tape-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,190px) minmax(0,1fr);gap:12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
 .tape-row .k{text-align:center;font-size:13px;color:var(--ink-3);font-stretch:90%}
@@ -234,7 +235,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 
 /* method */
 .method{display:grid;grid-template-columns:minmax(0,1fr);gap:28px 56px;border-top:6px solid var(--ink);padding-top:22px}
-.method > h2{font-size:clamp(28px,4vw,48px);overflow-wrap:anywhere;font-weight:900;font-stretch:115%;line-height:.92;letter-spacing:-.03em;text-transform:uppercase}
+.method > h2{font-family:var(--head);font-size:clamp(36px,5vw,64px);overflow-wrap:anywhere;font-weight:400;line-height:.98;letter-spacing:-.015em}
 .notes{display:flex;flex-direction:column;gap:36px;min-width:0}
 .notes section{display:flex;flex-direction:column;gap:12px}
 .notes h3{font-size:22px;font-weight:800;font-stretch:100%;letter-spacing:-.01em}
@@ -281,7 +282,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 .about .method{margin-top:24px}
 .about .method > h2{font-size:clamp(24px,3.2vw,36px)}
 .about{display:grid;gap:22px;border-top:6px solid var(--ink);padding-top:22px}
-.about > h2{font-size:clamp(28px,4vw,48px);font-weight:900;font-stretch:115%;line-height:.92;letter-spacing:-.03em;text-transform:uppercase}
+.about > h2{font-family:var(--head);font-size:clamp(36px,5vw,64px);font-weight:400;line-height:.98;letter-spacing:-.015em}
 .about .notes p{font-family:var(--serif);font-size:18px;line-height:1.55;max-width:62ch;color:var(--ink-2);margin:0 0 14px}
 #tl th{padding:0}
 #tl button.sort{all:unset;cursor:pointer;display:inline-flex;gap:4px;align-items:baseline;padding:8px 6px;color:inherit;font:inherit;white-space:nowrap}
@@ -318,7 +319,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 #pg-home{display:flex;flex-direction:column;gap:40px}
 .hm-hero{display:flex;flex-direction:column;gap:14px;max-width:820px}
 .hm-kick{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--s1)}
-.hm-h{font-size:clamp(38px,7vw,76px);line-height:.92;font-weight:900;font-stretch:70%;text-transform:uppercase;letter-spacing:-.01em;text-wrap:balance}
+.hm-h{font-family:var(--head);font-size:clamp(46px,8vw,100px);line-height:.94;font-weight:400;letter-spacing:-.02em;text-wrap:balance}
 .hm-dek{font-family:var(--serif);font-size:19px;color:var(--ink-2);max-width:40em;text-wrap:pretty}
 .hm-search{position:relative;margin-top:10px;max-width:640px}
 #hm-q{width:100%;font:inherit;font-size:22px;font-weight:700;font-stretch:90%;color:var(--ink);background:var(--board-2);
@@ -330,7 +331,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 #hm-list li{display:flex;align-items:center;gap:12px;padding:9px 14px;cursor:pointer;min-height:56px}
 #hm-list li[aria-selected="true"],#hm-list li:hover{background:var(--board-3)}
 #hm-list img,#hm-list .hm-blank{width:40px;height:40px;object-fit:cover;flex:none;background:var(--board-3)}
-.hm-nm{font-weight:900;font-stretch:75%;font-size:20px;line-height:1.05;text-transform:uppercase}
+.hm-nm{font-family:var(--head);font-weight:400;font-size:24px;line-height:1.05}
 .hm-meta{font-size:13px;color:var(--ink-3);font-stretch:90%}
 #hm-list li.hm-head{min-height:0;cursor:default;padding:10px 14px 4px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:none}
 #hm-list li.hm-req .hm-act{margin-left:auto;font-size:13px;font-weight:700;color:var(--board);background:var(--s1);padding:5px 11px;border-radius:999px;white-space:nowrap}
@@ -345,7 +346,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 .hm-tile .sl{aspect-ratio:1;background:var(--board-3);overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);transition:transform .18s}
 .hm-tile .sl img{width:100%;height:100%;object-fit:cover;display:block}
 .hm-tile .bd{background:var(--c);color:var(--band-ink);padding:7px 9px 8px}
-.hm-tile .bd b{display:block;font-weight:900;font-stretch:72%;font-size:18px;line-height:1;text-transform:uppercase}
+.hm-tile .bd b{display:block;font-family:var(--head);font-weight:400;font-size:21px;line-height:1}
 .hm-tile .bd span{font-size:12px;font-weight:600;font-stretch:90%}
 .hm-tile:hover .sl,.hm-tile:focus-visible .sl{transform:translateY(-4px) rotate(-1deg)}
 @media (prefers-reduced-motion:reduce){.hm-tile .sl{transition:none}}
@@ -370,7 +371,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 .tops{grid-template-columns:minmax(0,1fr);gap:0;margin-top:6px}
 .top{border-bottom:1px solid var(--rule)}
 @media (prefers-reduced-motion:reduce){.top .tg .ch{transition:none}}
-.top h4{margin:0;font-size:22px;font-weight:900;font-stretch:72%;text-transform:uppercase;line-height:1;display:flex;align-items:center;gap:9px}
+.top h4{margin:0;font-family:var(--head);font-size:30px;font-weight:400;line-height:1;display:flex;align-items:center;gap:9px}
 .top ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
 .top li{display:grid;grid-template-columns:24px 38px minmax(0,1fr) auto;align-items:center;gap:10px;padding:3px 4px;cursor:pointer}
 .top li:hover,.top li:focus-visible{background:var(--board-2)}
@@ -386,7 +387,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 
 <div class="wrap" id="app">
   <header class="mast">
-    <h1><a href="#home">MATTER OF RECORDS</a></h1>
+    <h1><a href="#home">Matter of Records</a></h1>
     <p class="sub">Career arcs, album by album, on fixed scales any two artists can share.</p>
     <nav class="nav" aria-label="Pages"><a href="#home" data-pg="home">Artists</a><a href="#charts" data-pg="charts">Charts</a><a href="#about" data-pg="about">About</a></nav>
   </header>
@@ -532,7 +533,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 
   <div class="colophon small">
         <span id="colo-l"></span>
-        <span>Built by Hyperakt with Claude · data in ~/Projects/long-player</span>
+        <span>Built by Hyperakt with Claude · data in ~/Projects/matter-of-records</span>
       </div>
 </div>
 
