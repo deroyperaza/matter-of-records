@@ -376,7 +376,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 .tops-head .opt button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--ink)}
 .tops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 40px;margin-top:22px}
 @media (max-width:760px){.tops{grid-template-columns:minmax(0,1fr)}}
-/* the list titles are buttons; each list folds like an accordion (Critics open by default) */
+/* the list titles are buttons; each list folds like an accordion (all closed by default) */
 .top .tg{all:unset;display:flex;align-items:center;gap:9px;width:100%;box-sizing:border-box;cursor:pointer;padding:16px 4px}
 .top .tg::before{content:"";width:14px;height:14px;background:var(--c);flex:none}
 .top .tg:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
@@ -1305,7 +1305,7 @@ function goArtist(id){
     {m:'fan',t:'Fans',c:'var(--s4)',v:al=>al.fan,bar:al=>al.fan,f:al=>al.fan},
     {m:'comm',t:'Units sold and streamed',c:'var(--s2)',v:al=>al.units,bar:al=>al.c,f:al=>fmtU(al.units)},
     {m:'chart',t:'Chart peaks',c:'var(--s3)',v:al=>al.k,bar:al=>al.k,f:pk}];
-  let order='best'; const open=new Set(['critic']);
+  let order='best'; const open=new Set(); /* all four lists start folded */
   function draw(){
     $('tp-best').setAttribute('aria-pressed',order==='best'); $('tp-rel').setAttribute('aria-pressed',order==='rel');
     $('tops').innerHTML=L.map(l=>{
