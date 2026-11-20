@@ -353,8 +353,11 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 .mast h1 a{color:inherit;text-decoration:none}
 /* the wordmark (brand/mor-wordmark.svg, traced from the ChatGPT round 1 logo) replaces the typed name; ink follows --ink */
 .mast h1 a{display:block;line-height:0}
-.mast .wm{display:block;height:44px;width:auto;max-width:100%}
-@media (max-width:760px){.mast .wm{height:32px}}
+.mast .wm{display:block;height:64px;width:auto;max-width:100%}
+/* NYT-style nameplate: wordmark centered on top, tagline and page links centered beneath */
+.mast{flex-direction:column;align-items:center;text-align:center;gap:10px;padding-top:6px}
+.mast .nav{justify-content:center}
+@media (max-width:760px){.mast .wm{height:40px}}
 
 /* landing top 20s: four ranked lists, one per score, bars in that score's ink */
 .tops-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px 16px;flex-wrap:wrap;border-bottom:2px solid var(--rule);padding-bottom:8px}
