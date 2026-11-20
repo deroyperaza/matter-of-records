@@ -359,23 +359,18 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 .tops-head .opt button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--ink)}
 .tops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 40px;margin-top:22px}
 @media (max-width:760px){.tops{grid-template-columns:minmax(0,1fr)}}
-/* the list titles are buttons; on phones each list folds into an accordion (Critics open by default) */
-.top .tg{all:unset;display:flex;align-items:center;gap:9px;width:100%;box-sizing:border-box;cursor:default}
+/* the list titles are buttons; each list folds like an accordion (Critics open by default) */
+.top .tg{all:unset;display:flex;align-items:center;gap:9px;width:100%;box-sizing:border-box;cursor:pointer;padding:16px 4px}
 .top .tg::before{content:"";width:14px;height:14px;background:var(--c);flex:none}
-.top .tg .ch{display:none;margin-left:auto;width:9px;height:9px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:translateY(-3px) rotate(45deg);transition:transform .18s}
-@media (max-width:760px){
-  .tops{gap:0;margin-top:6px}
-  .top{border-bottom:1px solid var(--rule)}
-  .top h4{margin:0}
-  .top .tg{cursor:pointer;padding:16px 4px}
-  .top .tg:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
-  .top .tg .ch{display:block}
-  .top.open .tg .ch{transform:translateY(2px) rotate(-135deg)}
-  .top:not(.open) ol{display:none}
-  .top.open ol{padding-bottom:18px}
-}
+.top .tg:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+.top .tg .ch{display:block;margin-left:auto;width:9px;height:9px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:translateY(-3px) rotate(45deg);transition:transform .18s}
+.top.open .tg .ch{transform:translateY(2px) rotate(-135deg)}
+.top:not(.open) ol{display:none}
+.top.open ol{padding-bottom:18px}
+.tops{grid-template-columns:minmax(0,1fr);gap:0;margin-top:6px}
+.top{border-bottom:1px solid var(--rule)}
 @media (prefers-reduced-motion:reduce){.top .tg .ch{transition:none}}
-.top h4{margin:0 0 10px;font-size:22px;font-weight:900;font-stretch:72%;text-transform:uppercase;line-height:1;display:flex;align-items:center;gap:9px}
+.top h4{margin:0;font-size:22px;font-weight:900;font-stretch:72%;text-transform:uppercase;line-height:1;display:flex;align-items:center;gap:9px}
 .top ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
 .top li{display:grid;grid-template-columns:24px 38px minmax(0,1fr) auto;align-items:center;gap:10px;padding:3px 4px;cursor:pointer}
 .top li:hover,.top li:focus-visible{background:var(--board-2)}
@@ -1293,7 +1288,7 @@ function goArtist(id){
     {m:'fan',t:'Fans',c:'var(--s4)',v:al=>al.fan,bar:al=>al.fan,f:al=>al.fan},
     {m:'comm',t:'Units sold and streamed',c:'var(--s2)',v:al=>al.units,bar:al=>al.c,f:al=>fmtU(al.units)},
     {m:'chart',t:'Chart peaks',c:'var(--s3)',v:al=>al.k,bar:al=>al.k,f:pk}];
-  let order='best'; const open=new Set(['critic']); const narrow=matchMedia('(max-width:760px)');
+  let order='best'; const open=new Set(['critic']);
   function draw(){
     $('tp-best').setAttribute('aria-pressed',order==='best'); $('tp-rel').setAttribute('aria-pressed',order==='rel');
     $('tops').innerHTML=L.map(l=>{
@@ -1308,7 +1303,7 @@ function goArtist(id){
         <span class="vl">${l.f(x.al)}</span></li>`).join('')}</ol></section>`;
     }).join('');
   }
-  $('tops').addEventListener('click',e=>{const b=e.target.closest('.tg'); if(b){ if(!narrow.matches)return;
+  $('tops').addEventListener('click',e=>{const b=e.target.closest('.tg'); if(b){
     const sec=b.closest('.top'), m=sec.dataset.m, on=!open.has(m); on?open.add(m):open.delete(m);
     sec.classList.toggle('open',on); b.setAttribute('aria-expanded',on); return; }
     const li=e.target.closest('li[data-a]'); if(li)goArtist(li.dataset.a);});
