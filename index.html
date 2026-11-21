@@ -1083,7 +1083,14 @@ function showTip(k,P){
   const row=document.getElementById('row-'+a.id+'-'+al.n); if(row)row.classList.add('hl');
 }
 function hideTip(){tip.hidden=true; panels.forEach(q=>{q.cross.setAttribute('x1',-10);q.cross.setAttribute('x2',-10);}); lastOn.forEach(n=>n.classList.remove('on'));}
-document.addEventListener('pointerdown',ev=>{if(tip.hidden)return; const t=ev.target; if(t.closest&&(t.closest('#tip')||t.closest('#charts svg')))return; hideTip();}); /* tap outside the chart or card closes it (Nov 20) */
+/* Touch: while a card is open, the first tap anywhere outside it only closes it. That whole tap
+   (down, moves, the click after) is swallowed so nothing behind fires; a second tap opens the next card. (Nov 20) */
+let swallowTap=false;
+const inTip=t=>t&&t.closest&&t.closest('#tip');
+document.addEventListener('pointerdown',ev=>{if(tip.hidden||ev.pointerType==='mouse'||inTip(ev.target))return; hideTip(); swallowTap=true; ev.stopPropagation(); ev.preventDefault();},true);
+document.addEventListener('pointermove',ev=>{if(swallowTap)ev.stopPropagation();},true);
+['pointerup','pointercancel'].forEach(n=>document.addEventListener(n,ev=>{if(swallowTap){ev.stopPropagation(); setTimeout(()=>{swallowTap=false;},400);}},true));
+document.addEventListener('click',ev=>{if(swallowTap){ev.stopPropagation(); ev.preventDefault(); swallowTap=false;}},true);
 
 /* ---------- tracklist ---------- */
 const COLS=[['n','No.'],['t','Album'],['artist','Artist'],['y','Year'],['us','US','num'],['uk','UK','num'],['riaa','RIAA'],['units','Sold + streamed','num'],['critic','Critics','num'],['rel','Then','num'],['fan','Fans','num'],['c','Units','num'],['k','Charts','num']];
