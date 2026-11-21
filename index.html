@@ -355,7 +355,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 .hm-tile .sl{aspect-ratio:1;background:var(--board-3);overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);transition:transform .18s}
 .hm-tile .sl img{width:100%;height:100%;object-fit:cover;display:block}
 .hm-tile .bd{flex:1;background:var(--c);color:var(--band-ink);padding:7px 9px 8px} /* band fills the row height, so a two-line name stretches its neighbours too */
-.hm-tile .bd b{display:block;font-family:var(--head);font-weight:400;font-size:21px;line-height:1}
+.hm-tile .bd b{display:block;font-family:var(--head);font-weight:400;font-size:32px;line-height:1;-webkit-text-stroke:.5px currentColor;paint-order:stroke fill}
 .hm-tile .bd span{font-size:12px;font-weight:600;font-stretch:90%}
 .hm-tile:hover .sl,.hm-tile:focus-visible .sl{transform:translateY(-4px) rotate(-1deg)}
 @media (prefers-reduced-motion:reduce){.hm-tile .sl{transition:none}}
