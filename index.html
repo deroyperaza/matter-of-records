@@ -898,7 +898,7 @@ function renderShape(W,narrow,xk){
     marks.forEach(k=>{if(k.row!==ri)return; const d=Math.abs(k.cx-sx)+Math.abs(k.cy-sy)*0.15; if(d<bd){bd=d;best=k}});
     if(best)showTip(best,P);
   };
-  hit.addEventListener('pointermove',move); hit.addEventListener('pointerdown',move); hit.addEventListener('pointerleave',hideTip);
+  hit.addEventListener('pointermove',move); hit.addEventListener('pointerdown',move); hit.addEventListener('pointerleave',ev=>{if(ev.pointerType!=='touch')hideTip();}); /* touch: card stays open after the finger lifts */
   const L=$('legend'), sw=S.view==='single'?'':(S.view==='versus'?S.vs:S.compare).map(id=>`<span style="color:var(--s${slotOf(id)})"><i class="key-area"></i><span style="color:var(--ink-2)">${esc(byId[id].name.replace(/^The /,''))}</span></span>`).join('');
   L.innerHTML=`${sw}${S.view==='single'?'<span><i class="key-sleeve"></i>Critics, today</span><span style="color:var(--s1)"><i class="key-drift"></i><span style="color:var(--ink-2)">At release, linked to today</span></span>':''}<span><i class="key-dot"></i>Album</span>${sideKey()}`;
   wireSide();
@@ -951,7 +951,7 @@ function renderBars(W0,narrow){
     let best=null,bd=1e9; marks.forEach(k=>{if(k.row!==ri)return; const d=Math.abs(k.cx-sx); if(d<bd){bd=d;best=k}});
     if(best)showTip(best,P);
   };
-  hit.addEventListener('pointermove',move); hit.addEventListener('pointerdown',move); hit.addEventListener('pointerleave',hideTip);
+  hit.addEventListener('pointermove',move); hit.addEventListener('pointerdown',move); hit.addEventListener('pointerleave',ev=>{if(ev.pointerType!=='touch')hideTip();}); /* touch: card stays open after the finger lifts */
   $('legend').innerHTML=rows.map(r=>`<span style="color:${r.c}"><i class="key-sq"></i><span style="color:var(--ink-2)">${r.title}</span></span>`).join('')+sideKey();
   wireSide();
   $('chart-title').textContent='Album by album';
@@ -1032,7 +1032,7 @@ function addPanel(title,series,o){
     if(best)showTip(best,P);
   };
   hit.addEventListener('pointermove',move); hit.addEventListener('pointerdown',move);
-  hit.addEventListener('pointerleave',hideTip);
+  hit.addEventListener('pointerleave',ev=>{if(ev.pointerType!=='touch')hideTip();}); /* touch: card stays open after the finger lifts */
 }
 const anySide=()=>(S.view==='single'?[S.artist]:S.view==='versus'?S.vs:S.compare).some(id=>byId[id].albums.some(SIDE));
 const sideKey=detail=>anySide()?`<span class="side-key">${detail?'':`<i class="key-hollow"></i>`}Live, soundtrack, collab, archival or posthumous<button id="side-tog" class="side-tog" aria-pressed="${!S.side}">${S.side?'Hide':'Show'}</button></span>`:'';
@@ -1083,6 +1083,7 @@ function showTip(k,P){
   const row=document.getElementById('row-'+a.id+'-'+al.n); if(row)row.classList.add('hl');
 }
 function hideTip(){tip.hidden=true; panels.forEach(q=>{q.cross.setAttribute('x1',-10);q.cross.setAttribute('x2',-10);}); lastOn.forEach(n=>n.classList.remove('on'));}
+document.addEventListener('pointerdown',ev=>{if(tip.hidden)return; const t=ev.target; if(t.closest&&(t.closest('#tip')||t.closest('#charts svg')))return; hideTip();}); /* tap outside the chart or card closes it (Nov 20) */
 
 /* ---------- tracklist ---------- */
 const COLS=[['n','No.'],['t','Album'],['artist','Artist'],['y','Year'],['us','US','num'],['uk','UK','num'],['riaa','RIAA'],['units','Sold + streamed','num'],['critic','Critics','num'],['rel','Then','num'],['fan','Fans','num'],['c','Units','num'],['k','Charts','num']];
