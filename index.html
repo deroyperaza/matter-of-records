@@ -359,6 +359,16 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 .hm-tile .bd span{font-size:12px;font-weight:600;font-stretch:90%}
 .hm-tile:hover .sl,.hm-tile:focus-visible .sl{transform:translateY(-4px) rotate(-1deg)}
 @media (prefers-reduced-motion:reduce){.hm-tile .sl{transition:none}}
+/* crate as a list: small sleeve thumbs, name in the artist's sleeve colour (Nov 21) */
+.hm-tools{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap}
+.hm-tools .opt button{font-size:13px;font-weight:700;color:var(--ink-3);border-bottom:2px solid transparent;padding-bottom:1px}
+.hm-tools .opt button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.hm-wall.list{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 32px}
+.hm-wall.list .hm-tile{flex-direction:row;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid var(--rule)}
+.hm-wall.list .hm-tile .sl{width:52px;flex:none;box-shadow:0 3px 8px rgba(0,0,0,.35)}
+.hm-wall.list .hm-tile .bd{background:none;color:var(--ink-3);padding:0;min-width:0}
+.hm-wall.list .hm-tile .bd b{font-size:22px;color:var(--c);margin-bottom:3px}
+.hm-wall.list .hm-tile:hover .sl,.hm-wall.list .hm-tile:focus-visible .sl{transform:rotate(-3deg)}
 .mast h1 a{color:inherit;text-decoration:none}
 /* the wordmark (brand/mor-wordmark.svg, traced from the ChatGPT round 1 logo) replaces the typed name; ink follows --ink */
 .mast h1 a{display:block;line-height:0}
@@ -426,7 +436,7 @@ tr:hover td,tr.hl td{background:var(--board-2)}
       <div class="tops" id="tops"></div>
     </div>
     <div>
-      <div class="hm-sec"><h3>In the crate</h3><span class="small" id="hm-count"></span></div>
+      <div class="hm-sec"><h3>In the crate</h3><div class="hm-tools"><span class="small" id="hm-count"></span><div class="opt" role="group" aria-label="Layout"><button id="cr-grid" aria-pressed="true">Sleeves</button><button id="cr-list" aria-pressed="false">List</button></div></div></div>
       <div class="hm-wall" id="hm-wall" style="margin-top:20px"></div>
     </div>
   </section>
@@ -1223,6 +1233,9 @@ function goArtist(id){
     el.onclick=e=>{e.preventDefault(); goArtist(a.id);};
     wall.appendChild(el);
   });
+  const lay=v=>{wall.classList.toggle('list',v==='list'); $('cr-grid').setAttribute('aria-pressed',v!=='list'); $('cr-list').setAttribute('aria-pressed',v==='list'); try{localStorage.setItem('crate',v)}catch(_){}};
+  $('cr-grid').onclick=()=>lay('grid'); $('cr-list').onclick=()=>lay('list');
+  try{if(localStorage.getItem('crate')==='list')lay('list')}catch(_){}
   const q=$('hm-q'), list=$('hm-list'), st=$('hm-status');
   let items=[], cur=-1, mbT=0, mbSeq=0;
   let asked={}; try{asked=JSON.parse(localStorage.getItem('mor-asked')||'{}')}catch(_){}
