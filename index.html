@@ -363,11 +363,11 @@ tr:hover td,tr.hl td{background:var(--board-2)}
 .hm-tools{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap}
 .hm-tools .opt button{font-size:13px;font-weight:700;color:var(--ink-3);border-bottom:2px solid transparent;padding-bottom:1px}
 .hm-tools .opt button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--ink)}
-.hm-wall.list{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 32px}
-.hm-wall.list .hm-tile{flex-direction:row;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid var(--rule)}
-.hm-wall.list .hm-tile .sl{width:52px;flex:none;box-shadow:0 3px 8px rgba(0,0,0,.35)}
-.hm-wall.list .hm-tile .bd{background:none;color:var(--ink-3);padding:0;min-width:0}
-.hm-wall.list .hm-tile .bd b{font-size:22px;color:var(--c);margin-bottom:3px}
+.hm-wall.list{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px 16px}
+.hm-wall.list .hm-tile{flex-direction:row;align-items:center;gap:12px;background:var(--c);color:var(--band-ink)} /* row = the big card's sleeve band, dark type (Nov 22) */
+.hm-wall.list .hm-tile .sl{width:52px;flex:none;box-shadow:none}
+.hm-wall.list .hm-tile .bd{background:none;color:var(--band-ink);padding:6px 10px 6px 0;min-width:0}
+.hm-wall.list .hm-tile .bd b{font-size:22px;margin-bottom:3px}
 .hm-wall.list .hm-tile:hover .sl,.hm-wall.list .hm-tile:focus-visible .sl{transform:rotate(-3deg)}
 .mast h1 a{color:inherit;text-decoration:none}
 /* the wordmark (brand/mor-wordmark.svg, traced from the ChatGPT round 1 logo) replaces the typed name; ink follows --ink */
